@@ -3,8 +3,9 @@ using UnityEngine;
 public class Projectile : MonoBehaviour
 {
     public float speed = 5f;
-    private float damage;
+    public float damage;
     private ObjectPool objectPool;
+    public float detectionRadius = 0.5f; // Radio de detección para las colisiones
 
     public void SetDamage(float damageAmount)
     {
@@ -20,20 +21,28 @@ public class Projectile : MonoBehaviour
     {
         // Mover el proyectil hacia la derecha en línea recta
         transform.Translate(Vector3.right * speed * Time.deltaTime);
+
+        // Detectar colisiones manualmente
+        DetectCollisions();
     }
 
-    private void OnTriggerEnter2D(Collider2D other)
+    private void DetectCollisions()
     {
-        if (other.gameObject.layer == LayerMask.NameToLayer("Enemy"))
+        Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, detectionRadius);
+        foreach (Collider2D hit in hits)
         {
-            // Infligir daño al enemigo
-            Enemy enemy = other.GetComponent<Enemy>();
-            if (enemy != null)
+            if (hit.gameObject.layer == LayerMask.NameToLayer("Enemy"))
             {
-                enemy.TakeDamage(damage);
-                Debug.Log("Projectile hit enemy: " + other.name + " for " + damage + " damage.");
+                // Infligir daño al enemigo
+                Enemy enemy = hit.GetComponent<Enemy>();
+                if (enemy != null)
+                {
+                    enemy.TakeDamage(damage);
+                    Debug.Log("Projectile hit enemy: " + hit.name + " for " + damage + " damage.");
+                    ReturnToPool();
+                    break; // Salir del bucle después de detectar una colisión
+                }
             }
-            ReturnToPool();
         }
     }
 
