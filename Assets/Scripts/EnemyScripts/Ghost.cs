@@ -2,28 +2,23 @@ using UnityEngine;
 
 public class Ghost : Enemy
 {
-    private void Start()
+    protected override void Awake()
     {
-        health = 30f; // Menos vida
-        damage = 8f; // Menos daño
-        speed = 3f; // Más rápido
+        base.Awake();
+        health = 100f; // Menos vida
+        damage = 5f; // Menos daño
+        speed = 2f; // Más rápido
     }
 
     protected override void Move()
     {
         base.Move();
-        Debug.Log("Ghost is moving.");
-    }
-
-    protected override void Attack()
-    {
-        base.Attack();
-        Debug.Log("Ghost attacks!");
+        Debug.Log("Ghost is moving."); 
     }
 
     protected override void Die()
     {
         base.Die();
-        Debug.Log("Ghost has been destroyed!");
+        Debug.Log("Ghost has been destroyed!"); // Eliminar si no es necesario
     }
 }

@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4525196427820035684}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: ShootPoint
   m_TagString: Untagged
   m_Icon: {fileID: 3306451490063965843, guid: 0000000000000000d000000000000000, type: 0}
@@ -44,7 +44,8 @@ GameObject:
   - component: {fileID: 8238967791468587380}
   - component: {fileID: 9151598470736190363}
   - component: {fileID: 5727113627169711837}
-  m_Layer: 0
+  - component: {fileID: 2904324343540086800}
+  m_Layer: 8
   m_Name: wizard
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -152,7 +153,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
@@ -180,10 +181,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd4d8e257791bba42ae8e7d25036baf0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 100
-  attackPower: 10
-  attackRange: 5
-  attackRate: 1
+  health: 20
+  attackPower: 40
+  attackRange: 7
+  attackRate: 0.5
   projectilePrefab: {fileID: 3960047877333119027, guid: 16eb930c54e4e3d4eb92a06af92c167f, type: 3}
   shootPoint: {fileID: 4525196427820035684}
   projectilePool: {fileID: 5727113627169711837}
@@ -204,3 +205,30 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   prefab: {fileID: 3960047877333119027, guid: 16eb930c54e4e3d4eb92a06af92c167f, type: 3}
   initialSize: 10
+--- !u!50 &2904324343540086800
+Rigidbody2D:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4853902144076567918}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0

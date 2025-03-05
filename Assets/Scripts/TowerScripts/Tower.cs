@@ -13,6 +13,7 @@ public class Tower : MonoBehaviour
 
     private float attackCooldown = 0f;
     private float detectionCooldown = 0.1f; // Frecuencia de detección
+    private Enemy targetEnemy; // Referencia al enemigo objetivo
 
     private void Update()
     {
@@ -25,10 +26,14 @@ public class Tower : MonoBehaviour
             detectionCooldown = 0.1f; // Reiniciar el tiempo de detección
         }
 
-        if (attackCooldown <= 0f && IsEnemyInRange())
+        if (attackCooldown <= 0f && targetEnemy != null && IsEnemyInRange(targetEnemy))
         {
             Attack();
             attackCooldown = 1f / attackRate;
+        }
+        else
+        {
+            targetEnemy = null; // Si no hay enemigos en rango, dejar de atacar
         }
     }
 
@@ -37,14 +42,14 @@ public class Tower : MonoBehaviour
         RaycastHit2D hit = Physics2D.Raycast(shootPoint.position, Vector2.right, attackRange, enemyLayer);
         if (hit.collider != null)
         {
+            targetEnemy = hit.collider.GetComponent<Enemy>();
             Debug.Log("Enemy detected: " + hit.collider.name);
         }
     }
 
-    private bool IsEnemyInRange()
+    private bool IsEnemyInRange(Enemy enemy)
     {
-        RaycastHit2D hit = Physics2D.Raycast(shootPoint.position, Vector2.right, attackRange, enemyLayer);
-        return hit.collider != null;
+        return enemy != null && Vector2.Distance(transform.position, enemy.transform.position) <= attackRange;
     }
 
     protected virtual void Attack()
@@ -67,6 +72,7 @@ public class Tower : MonoBehaviour
 
     public void TakeDamage(float damage)
     {
+        Debug.Log("Tower takes damage: " + damage);
         health -= damage;
         if (health <= 0f)
         {
@@ -76,7 +82,6 @@ public class Tower : MonoBehaviour
 
     protected virtual void Die()
     {
-        // Implementación general de la muerte de la torre
         Debug.Log("Tower has died.");
         Destroy(gameObject);
     }

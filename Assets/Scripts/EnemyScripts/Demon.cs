@@ -2,28 +2,23 @@ using UnityEngine;
 
 public class Demon : Enemy
 {
-    private void Start()
+    protected override void Awake()
     {
-        health = 100f; // Mucha vida
-        damage = 20f; // Mucho daño
-        speed = 1.5f; // Más lento
+        base.Awake();
+        health = 100f;
+        damage = 20f;
+        speed = 1.5f;
     }
 
     protected override void Move()
     {
         base.Move();
-        Debug.Log("Demon is moving.");
-    }
-
-    protected override void Attack()
-    {
-        base.Attack();
-        Debug.Log("Demon attacks!");
+        // Debug.Log("Demon is moving."); // Eliminar si no es necesario
     }
 
     protected override void Die()
     {
         base.Die();
-        Debug.Log("Demon has been destroyed!");
+        // Debug.Log("Demon has been destroyed!"); // Eliminar si no es necesario
     }
 }

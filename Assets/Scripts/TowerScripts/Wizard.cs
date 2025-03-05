@@ -4,8 +4,8 @@ public class Wizard : Tower
 {
     private void Start()
     {
-        health = 100f; // Vida media
-        attackPower = 25f; // Mucho daño
+        health = 20f; // Vida media
+        attackPower = 40f; // Mucho daño
         attackRate = 0.5f; // Disparo lento
         attackRange = 7f;
     }

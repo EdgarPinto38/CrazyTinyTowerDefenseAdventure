@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class DragDrop : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
@@ -8,6 +9,9 @@ public class DragDrop : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
     private CanvasGroup canvasGroup;
     private Vector3 originalPosition;
     public GameObject towerPrefab;
+    public int towerCost;
+    private EconomyManager economyManager;
+    private Image image;
 
     private void Awake()
     {
@@ -15,43 +19,68 @@ public class DragDrop : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
         canvasGroup = GetComponent<CanvasGroup>();
         canvas = GetComponentInParent<Canvas>();
         originalPosition = rectTransform.anchoredPosition;
+        economyManager = FindObjectOfType<EconomyManager>();
+        image = GetComponent<Image>();
+    }
+
+    private void Update()
+    {
+        if (economyManager.CanAfford(towerCost))
+        {
+            image.color = Color.white; // Color normal si se puede comprar
+            canvasGroup.blocksRaycasts = true;
+        }
+        else
+        {
+            image.color = Color.gray; // Color apagado si no se puede comprar
+            canvasGroup.blocksRaycasts = false;
+        }
     }
 
     public void OnBeginDrag(PointerEventData eventData)
     {
-        canvasGroup.alpha = .6f;
-        canvasGroup.blocksRaycasts = false;
+        if (economyManager.CanAfford(towerCost))
+        {
+            canvasGroup.alpha = .6f;
+            canvasGroup.blocksRaycasts = false;
+        }
     }
 
     public void OnDrag(PointerEventData eventData)
     {
-        rectTransform.anchoredPosition += eventData.delta / canvas.scaleFactor;
+        if (economyManager.CanAfford(towerCost))
+        {
+            rectTransform.anchoredPosition += eventData.delta / canvas.scaleFactor;
+        }
     }
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        canvasGroup.alpha = 1f;
-        canvasGroup.blocksRaycasts = true;
-
-        // Aquí llamas a la función para instanciar la torre
-        Vector3 worldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        worldPosition.z = 0f; // Ajusta la posición en Z si es necesario
-
-        Debug.Log("Attempting to place tower at world position: " + worldPosition);
-
-        // Llama a la función de la clase Grid para colocar la torre si la celda está vacía
-        if (GridBehaviour.Instance.grid.CanPlaceTower(worldPosition))
+        if (economyManager.CanAfford(towerCost))
         {
-            Debug.Log("Can place tower, calling SetTower");
-            GridBehaviour.Instance.grid.SetTower(worldPosition, towerPrefab);
-        }
-        else
-        {
-            Debug.Log("Cannot place tower, cell is already occupied.");
-        }
+            canvasGroup.alpha = 1f;
+            canvasGroup.blocksRaycasts = true;
 
-        // Restaurar la posición original de la imagen
-        rectTransform.anchoredPosition = originalPosition;
+            Vector3 worldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            worldPosition.z = 0f;
+
+            if (GridBehaviour.Instance.grid.CanPlaceTower(worldPosition))
+            {
+                if (economyManager.SpendPoints(towerCost)) // Asegurarse de que se restan los puntos correctamente
+                {
+                    GridBehaviour.Instance.grid.SetTower(worldPosition, towerPrefab);
+                }
+                else
+                {
+                    Debug.Log("Not enough points to place the tower.");
+                }
+            }
+            else
+            {
+                Debug.Log("Cannot place tower, cell is already occupied.");
+            }
+
+            rectTransform.anchoredPosition = originalPosition;
+        }
     }
-
 }

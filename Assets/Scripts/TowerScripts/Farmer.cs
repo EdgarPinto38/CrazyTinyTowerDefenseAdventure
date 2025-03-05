@@ -4,10 +4,10 @@ public class Farmer : Tower
 {
     private void Start()
     {
-        health = 50f; // Poca vida
-        attackPower = 50f;
+        health = 10f; // Poca vida
+        attackPower = 5f;
         attackRate = 2f; // Disparo rápido
-        attackRange = 5f;
+        attackRange = 4f;
         // El prefab del proyectil se asignará desde el Inspector, por lo que no necesitamos asignarlo aquí.
     }
 

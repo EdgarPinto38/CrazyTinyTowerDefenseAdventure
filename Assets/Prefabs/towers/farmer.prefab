@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4525196427820035684}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: ShootPoint
   m_TagString: Untagged
   m_Icon: {fileID: 3306451490063965843, guid: 0000000000000000d000000000000000, type: 0}
@@ -45,7 +45,8 @@ GameObject:
   - component: {fileID: 485234793521748746}
   - component: {fileID: 5727113627169711837}
   - component: {fileID: 2207086124216581181}
-  m_Layer: 0
+  - component: {fileID: 9048103506461215653}
+  m_Layer: 8
   m_Name: farmer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -153,7 +154,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
@@ -181,10 +182,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 928adb896a6455143a0391b4a10982e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 100
-  attackPower: 100
+  health: 10
+  attackPower: 5
   attackRange: 5
-  attackRate: 1
+  attackRate: 2
   projectilePrefab: {fileID: 3960047877333119027, guid: 31bfe6991a20f784c81ddb0bd24e4978, type: 3}
   shootPoint: {fileID: 4525196427820035684}
   projectilePool: {fileID: 5727113627169711837}
@@ -227,3 +228,30 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!50 &9048103506461215653
+Rigidbody2D:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4853902144076567918}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0

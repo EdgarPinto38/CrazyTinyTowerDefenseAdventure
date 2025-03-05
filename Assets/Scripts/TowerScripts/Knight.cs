@@ -4,9 +4,9 @@ public class Knight : Tower
 {
     private void Start()
     {
-        health = 200f; // Mucha vida
-        attackPower = 50f; // Mucho daño
-        attackRate = 0.2f; // Extremadamente lento
+        health = 150f; // Mucha vida
+        attackPower = 40f; // Mucho daño
+        attackRate = 1f; // Extremadamente lento
         attackRange = 2f; // Ataque cercano
     }
 

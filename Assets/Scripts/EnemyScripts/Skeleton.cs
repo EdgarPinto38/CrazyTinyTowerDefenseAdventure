@@ -2,11 +2,12 @@ using UnityEngine;
 
 public class Skeleton : Enemy
 {
-    private void Start()
+    protected override void Awake()
     {
-        health = 50f; // Vida media
-        damage = 12f; // Daño medio
-        speed = 2.5f; // Velocidad media
+        base.Awake();
+        health = 1f; // Menos vida
+        damage = 8f; // Menos daño
+        speed = 2f; // Más rápido
     }
 
     protected override void Move()
@@ -15,11 +16,7 @@ public class Skeleton : Enemy
         Debug.Log("Skeleton is moving.");
     }
 
-    protected override void Attack()
-    {
-        base.Attack();
-        Debug.Log("Skeleton attacks!");
-    }
+   
 
     protected override void Die()
     {
