@@ -116,10 +116,8 @@ public class Enemy : MonoBehaviour
 
     private void DetectTower()
     {
-        float rayDistance = 1f; // Distancia del raycast
-        int layerMask = LayerMask.GetMask("Towers"); // Asegúrate de que las torres estén en la capa "Towers"
-
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.left, rayDistance, layerMask);
+        float rayDistance = 5f; // Distancia del raycast
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.left, rayDistance);
 
         if (hit.collider != null)
         {
@@ -148,9 +146,6 @@ public class Enemy : MonoBehaviour
         }
     }
 
-
-
-
     private bool IsOutOfBounds() => transform.position.x < Camera.main.ViewportToWorldPoint(Vector3.zero).x;
 
     private void HandleOutOfBounds()
@@ -167,7 +162,7 @@ public class Enemy : MonoBehaviour
 
     protected virtual void Die()
     {
-        economyManager.AddPoints(pointsValue);
+        economyManager.AddPoints(pointsValue); // Añadir puntos según el valor del enemigo
         Destroy(gameObject);
     }
 }

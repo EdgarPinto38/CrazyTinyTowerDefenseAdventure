@@ -35,7 +35,7 @@ public class EconomyManager : MonoBehaviour
 
     private void UpdatePointsUI()
     {
-        pointsText.text = points.ToString();
+        pointsText.text = points.ToString() + "pts";
     }
 
     public bool CanAfford(int amount)

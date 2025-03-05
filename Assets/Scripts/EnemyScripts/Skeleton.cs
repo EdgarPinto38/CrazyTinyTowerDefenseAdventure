@@ -8,6 +8,7 @@ public class Skeleton : Enemy
         health = 1f; // Menos vida
         damage = 8f; // Menos daño
         speed = 2f; // Más rápido
+        pointsValue = 50;
     }
 
     protected override void Move()

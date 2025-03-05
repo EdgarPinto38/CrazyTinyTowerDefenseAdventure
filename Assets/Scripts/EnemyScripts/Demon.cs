@@ -8,6 +8,7 @@ public class Demon : Enemy
         health = 100f;
         damage = 20f;
         speed = 1.5f;
+        pointsValue = 75;
     }
 
     protected override void Move()

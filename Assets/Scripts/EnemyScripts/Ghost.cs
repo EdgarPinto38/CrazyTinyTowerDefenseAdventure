@@ -5,9 +5,10 @@ public class Ghost : Enemy
     protected override void Awake()
     {
         base.Awake();
-        health = 100f; // Menos vida
+        health = 1f; // Menos vida
         damage = 5f; // Menos daño
         speed = 2f; // Más rápido
+        pointsValue = 25;
     }
 
     protected override void Move()
