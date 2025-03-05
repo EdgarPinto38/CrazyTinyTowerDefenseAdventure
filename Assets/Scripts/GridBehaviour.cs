@@ -3,15 +3,19 @@ using UnityEngine;
 public class GridBehaviour : MonoBehaviour
 {
     public GameObject cell;
-    public GameObject tower;
+    public GameObject tower1;
+    public GameObject tower2;
+    public GameObject tower3;
     public Grid grid;
     private static GridBehaviour instance;
+    public Vector3 gridOriginPosition = new Vector3(0, 0, 0); // Ajuste de la posición del grid
 
     private void Awake()
     {
         if (instance == null)
         {
             instance = this;
+            Debug.Log("GridBehaviour instance initialized.");
         }
         else
         {
@@ -26,7 +30,8 @@ public class GridBehaviour : MonoBehaviour
 
     void Start()
     {
-        grid = new Grid(4, 3, 2f, cell, new Vector3(-4, -2));
+        grid = new Grid(6, 4, 2f, cell, gridOriginPosition); // Usar la posición de origen ajustable
+        Debug.Log("Grid initialized in GridBehaviour Start.");
     }
 
     // La función Update ya no necesita manejar el clic derecho.
