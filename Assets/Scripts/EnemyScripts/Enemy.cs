@@ -9,11 +9,15 @@ public class Enemy : MonoBehaviour
     public float attackRate = 1f; // Ataques por segundo
     public int pointsValue = 10;  // Puntos al morir
 
+    [Header("Detection Settings")]
+    public float detectionDistance = 5f; // Distancia de detección con raycast
+    public LayerMask towerLayer; // Para filtrar solo las torres
+
     [Header("References")]
     public WaveController waveController;
 
     private EconomyManager economyManager;
-    private MonoBehaviour targetTower;
+    private Tower targetTower;
     private float attackCooldown = 0f;
     private float baseSpeed;
 
@@ -57,12 +61,20 @@ public class Enemy : MonoBehaviour
     {
         attackCooldown -= Time.deltaTime;
 
-        if (targetTower == null)
-            Move();
-        else if (attackCooldown <= 0f)
-            AttackTower();
-
+        // Detectamos torres primero
         DetectTower();
+
+        // Si hay una torre objetivo, atacamos (si el cooldown lo permite)
+        if (targetTower != null)
+        {
+            if (attackCooldown <= 0f)
+                AttackTower();
+        }
+        else
+        {
+            // Si no hay torre, nos movemos
+            Move();
+        }
 
         if (IsOutOfBounds())
             HandleOutOfBounds();
@@ -70,79 +82,61 @@ public class Enemy : MonoBehaviour
 
     protected virtual void Move() => transform.Translate(Vector3.left * speed * Time.deltaTime);
 
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.TryGetComponent(out Tower tower))
-        {
-            AssignTargetTower(tower);
-        }
-    }
-
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        if (collision.TryGetComponent(out Tower tower) && targetTower == tower)
-        {
-            targetTower = null;
-            ResumeMoving();
-        }
-    }
-
-    private void AssignTargetTower(MonoBehaviour tower)
-    {
-        targetTower = tower;
-        StopMoving();
-    }
-
-    private void StopMoving()
-    {
-        speed = 0f;
-        Debug.Log("StopMoving called: speed set to 0");
-    }
-
-    private void ResumeMoving()
-    {
-        speed = baseSpeed;
-        Debug.Log($"ResumeMoving called: speed = {speed}, baseSpeed = {baseSpeed}");
-    }
-
-    private void AttackTower()
-    {
-        if (targetTower.TryGetComponent(out Tower tower))
-        {
-            tower.TakeDamage(damage);
-            attackCooldown = 1f / attackRate;
-        }
-    }
-
     private void DetectTower()
     {
-        float rayDistance = 5f; // Distancia del raycast
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.left, rayDistance);
+        // Dibuja el rayo en el editor para debugging
+        Debug.DrawRay(transform.position, Vector2.left * detectionDistance, Color.red);
+
+        // Realiza el raycast hacia la izquierda
+        RaycastHit2D hit = Physics2D.Raycast(
+            transform.position,
+            Vector2.left,
+            detectionDistance,
+            towerLayer  // Usa la capa de torres si la has configurado
+        );
 
         if (hit.collider != null)
         {
-            Debug.Log("Raycast hit detected!");
-
-            // Verificar si el objeto tiene un componente Tower o una clase derivada
+            // Verificar si el objeto tiene un componente Tower
             Tower towerComponent = hit.collider.GetComponent<Tower>();
             if (towerComponent != null)
             {
+                // Si detectamos una torre, la asignamos como objetivo y nos detenemos
                 targetTower = towerComponent;
                 StopMoving();
-                Debug.Log("Tower detected: Stopping the enemy.");
+                Debug.Log($"Tower detected at distance {hit.distance}. Stopping to attack.");
             }
             else
             {
-                Debug.Log("Raycast hit, but no Tower component found.");
+                // Si el objeto no es una torre, limpiamos el objetivo y seguimos moviéndonos
                 targetTower = null;
                 ResumeMoving();
             }
         }
         else
         {
-            Debug.Log("No Raycast hit detected.");
+            // Si no detectamos nada, limpiamos el objetivo y seguimos moviéndonos
             targetTower = null;
             ResumeMoving();
+        }
+    }
+
+    private void StopMoving()
+    {
+        speed = 0f;
+    }
+
+    private void ResumeMoving()
+    {
+        speed = baseSpeed;
+    }
+
+    private void AttackTower()
+    {
+        if (targetTower != null)
+        {
+            targetTower.TakeDamage(damage);
+            attackCooldown = 1f / attackRate;
         }
     }
 
@@ -154,7 +148,7 @@ public class Enemy : MonoBehaviour
         Destroy(gameObject);
     }
 
-    public void TakeDamage(float amount)
+    public virtual void TakeDamage(float amount)
     {
         health -= amount;
         if (health <= 0f) Die();

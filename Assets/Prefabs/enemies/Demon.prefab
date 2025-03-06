@@ -149,11 +149,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e249f02a0201c8447be8d2540d86f47b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 50
-  damage: 10
-  speed: 2
-  attackRate: 1
+  health: 120
+  damage: 20
+  speed: 0.5
+  attackRate: 0.5
   pointsValue: 10
+  detectionDistance: 1
+  towerLayer:
+    serializedVersion: 2
+    m_Bits: 256
   waveController: {fileID: 0}
 --- !u!50 &-7194254390490764049
 Rigidbody2D:

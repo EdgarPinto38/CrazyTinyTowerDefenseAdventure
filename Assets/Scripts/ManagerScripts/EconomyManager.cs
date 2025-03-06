@@ -3,13 +3,13 @@ using TMPro;
 
 public class EconomyManager : MonoBehaviour
 {
-    public int initialPoints = 300; // Cantidad inicial de puntos que se puede modificar desde el Inspector
+    public int initialPoints = 200; // Cantidad inicial de puntos que se puede modificar desde el Inspector
     public int points;
-    public TMP_Text pointsText; // Cambiado a TMP_Text para usar TextMeshPro
+    public TMP_Text pointsText; 
 
     private void Start()
     {
-        points = initialPoints; // Asignar los puntos iniciales al empezar el juego
+        points = initialPoints; 
         UpdatePointsUI();
     }
 

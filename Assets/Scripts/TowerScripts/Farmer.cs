@@ -2,26 +2,31 @@ using UnityEngine;
 
 public class Farmer : Tower
 {
+    protected override void Awake()
+    {
+        // Llamamos al Awake base para inicializar el SpriteRenderer y originalColor
+        base.Awake();
+    }
+
     private void Start()
     {
-        health = 10f; // Poca vida
-        attackPower = 5f;
-        attackRate = 2f; // Disparo rápido
-        attackRange = 4f;
-        // El prefab del proyectil se asignará desde el Inspector, por lo que no necesitamos asignarlo aquí.
+        health = 40f; 
+        attackPower = 10f;
+        attackRate = 2f; 
+        attackRange = 5f;
+      
     }
 
     protected override void Attack()
     {
         base.Attack();
-        Debug.Log("Farmer attack!");
+       
     }
 
     protected override void Die()
     {
-        // Implementación específica de la muerte para Farmer
-        base.Die();
+     
+        base.Die(); 
         Debug.Log("Farmer has been destroyed!");
-        // Añadir el código específico de muerte aquí
     }
 }
