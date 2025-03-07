@@ -51,7 +51,7 @@ public class Projectile : MonoBehaviour
         // Devolver el proyectil al pool cuando salga de la pantalla
         ReturnToPool();
     }
-
+    // Activar metodo Pool
     private void ReturnToPool()
     {
         if (objectPool != null)

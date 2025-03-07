@@ -35,7 +35,7 @@ public class Enemy : MonoBehaviour
     {
         economyManager = FindObjectOfType<EconomyManager>();
 
-        waveController = FindObjectOfType<WaveController>(); // Asigna el WaveController mediante código
+        waveController = FindObjectOfType<WaveController>();
 
         if (waveController == null)
         {
@@ -49,8 +49,8 @@ public class Enemy : MonoBehaviour
     {
         economyManager = FindObjectOfType<EconomyManager>();
 
-        // Asegúrate de que speed tenga un valor antes de asignar baseSpeed
-        if (speed == 0f) speed = 2f; // Puedes cambiar este valor según tus necesidades
+      
+        if (speed == 0f) speed = 2f; 
         baseSpeed = speed;
 
         if (waveController == null)
@@ -92,7 +92,7 @@ public class Enemy : MonoBehaviour
             transform.position,
             Vector2.left,
             detectionDistance,
-            towerLayer  // Usa la capa de torres si la has configurado
+            towerLayer  
         );
 
         if (hit.collider != null)

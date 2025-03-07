@@ -12,20 +12,20 @@ public enum WaveDifficulty
 
 public class WaveController : MonoBehaviour
 {
-    public Transform[] spawnPoints; // Puntos de spawn
-    public GameObject[] easyEnemies; // Prefabs de enemigos fáciles
-    public GameObject[] mediumEnemies; // Prefabs de enemigos medios
-    public GameObject[] hardEnemies; // Prefabs de enemigos difíciles
+    public Transform[] spawnPoints;
+    public GameObject[] easyEnemies;
+    public GameObject[] mediumEnemies;
+    public GameObject[] hardEnemies;
     public float spawnInterval = 2f; // Intervalo entre spawns
     public float initialDelay = 15f; // Retardo inicial antes de que comience la oleada
-    public WaveDifficulty difficulty = WaveDifficulty.Easy; // Dificultad de la oleada
-    public TMP_Text enemiesLeftText; // Texto de TextMeshPro para mostrar los enemigos restantes
+    public WaveDifficulty difficulty = WaveDifficulty.Easy;
+    public TMP_Text enemiesLeftText;
 
     public int easyEnemiesToKill = 10; // Cantidad de enemigos a eliminar para dificultad fácil
     public int mediumEnemiesToKill = 20; // Cantidad de enemigos a eliminar para dificultad media
     public int hardEnemiesToKill = 30; // Cantidad de enemigos a eliminar para dificultad difícil
 
-    public GameObject winPanel; // Panel de ganar
+    public GameObject winPanel;
     public GameObject losePanel;
 
     private int totalEnemies;
@@ -80,6 +80,7 @@ public class WaveController : MonoBehaviour
         }
     }
 
+    // Método para generar un enemigo
     private void SpawnEnemy()
     {
         if (totalEnemies <= 0) return;
@@ -100,6 +101,7 @@ public class WaveController : MonoBehaviour
         UpdateEnemiesLeftUI();
     }
 
+    // Método para seleccionar el enemigo basado en la dificultad
     private GameObject SelectEnemyBasedOnDifficulty()
     {
         GameObject[] selectedEnemies;
@@ -122,6 +124,7 @@ public class WaveController : MonoBehaviour
         return selectedEnemies[Random.Range(0, selectedEnemies.Length)];
     }
 
+    // Método para actualizar el contador de enemigos restantes
     public void EnemyKilled()
     {
         enemiesKilled++;
@@ -142,11 +145,13 @@ public class WaveController : MonoBehaviour
         }
     }
 
+    // Método para manejar la situación en la que un enemigo pasa sin ser derrotado
     public void EnemyPassed()
     {
         EndLevel(false);
     }
 
+    // Método para finalizar el nivel
     public void EndLevel(bool isWin)
     {
         levelEnded = true;
@@ -167,16 +172,18 @@ public class WaveController : MonoBehaviour
             Destroy(enemy.gameObject);
         }
 
-        // Moverse a la escena LevelSelector después de 3 segundos
+        // Moverse a la escena de menu después de 3 segundos
         StartCoroutine(MoveToMainMenuAfterDelay(3f));
     }
 
+    // Método para mover al menú principal después de un retraso
     private IEnumerator MoveToMainMenuAfterDelay(float delay)
     {
         yield return new WaitForSeconds(delay);
         SceneManager.LoadScene("MainMenu");
     }
 
+    // Método para verificar si todos los enemigos han sido derrotados
     private bool AreAllEnemiesDefeated()
     {
         return FindObjectsOfType<Enemy>().Length == 0;

@@ -25,24 +25,26 @@ public class Grid
         {
             for (int y = 0; y < gridArray.GetLength(1); y++)
             {
-                arrayTower[x, y] = null;  // Asegúrate de que todas las celdas estén inicializadas como vacías
+                arrayTower[x, y] = null;
                 GameObject.Instantiate(cell, GetWorldPosition(x, y) + new Vector3(cellSize, cellSize) * .5f, Quaternion.identity);
             }
         }
     }
 
-
+    // Método para obtener la posición del mundo basada en las coordenadas de la grilla
     private Vector3 GetWorldPosition(int x, int y)
     {
         return new Vector3(x, y) * cellSize + originPosition;
     }
 
+    // Método para convertir una posición del mundo en coordenadas de la grilla
     private void GetXY(Vector3 worldPosition, out int x, out int y)
     {
         x = Mathf.FloorToInt((worldPosition - originPosition).x / cellSize);
         y = Mathf.FloorToInt((worldPosition - originPosition).y / cellSize);
     }
 
+    // Método para colocar una torre en una ubicación específica de la grilla
     private void SetLocationTower(int x, int y, GameObject tower)
     {
         if (x >= 0 && y >= 0 && x < width && y < height)
@@ -59,8 +61,7 @@ public class Grid
         }
     }
 
-
-
+    // Método público para establecer una torre en la posición del mundo especificada
     public void SetTower(Vector3 worldPosition, GameObject tower)
     {
         int x, y;
@@ -69,7 +70,7 @@ public class Grid
         SetLocationTower(x, y, tower);
     }
 
-
+    // Método para verificar si se puede colocar una torre en una posición del mundo específica
     public bool CanPlaceTower(Vector3 worldPosition)
     {
         int x, y;
@@ -80,5 +81,4 @@ public class Grid
         }
         return false;
     }
-
 }

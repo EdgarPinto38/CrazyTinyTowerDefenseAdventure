@@ -37,6 +37,7 @@ public class DragDrop : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
         }
     }
 
+    // Método llamado cuando se comienza a arrastrar el objeto
     public void OnBeginDrag(PointerEventData eventData)
     {
         if (economyManager.CanAfford(towerCost))
@@ -46,6 +47,7 @@ public class DragDrop : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
         }
     }
 
+    // Método llamado mientras se arrastra el objeto
     public void OnDrag(PointerEventData eventData)
     {
         if (economyManager.CanAfford(towerCost))
@@ -54,6 +56,7 @@ public class DragDrop : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
         }
     }
 
+    // Método llamado cuando se termina de arrastrar el objeto
     public void OnEndDrag(PointerEventData eventData)
     {
         if (economyManager.CanAfford(towerCost))
@@ -66,7 +69,7 @@ public class DragDrop : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
 
             if (GridBehaviour.Instance.grid.CanPlaceTower(worldPosition))
             {
-                if (economyManager.SpendPoints(towerCost)) // Asegurarse de que se restan los puntos correctamente
+                if (economyManager.SpendPoints(towerCost)) 
                 {
                     GridBehaviour.Instance.grid.SetTower(worldPosition, towerPrefab);
                 }

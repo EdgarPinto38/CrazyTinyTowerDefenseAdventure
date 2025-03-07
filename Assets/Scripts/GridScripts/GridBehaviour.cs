@@ -34,12 +34,7 @@ public class GridBehaviour : MonoBehaviour
         Debug.Log("Grid initialized in GridBehaviour Start.");
     }
 
-    // La función Update ya no necesita manejar el clic derecho.
-    private void Update()
-    {
-        // Hemos eliminado la funcionalidad de clic derecho.
-    }
-
+    // Método para obtener la posición del mundo basada en la posición del mouse
     private Vector3 GetWorldPosition()
     {
         Vector3 vec = GetMouseWorldPosition(Input.mousePosition);
@@ -47,6 +42,7 @@ public class GridBehaviour : MonoBehaviour
         return vec;
     }
 
+    // Método para convertir la posición del mouse en la posición del mundo
     private Vector3 GetMouseWorldPosition(Vector3 screenPosition)
     {
         Vector3 worldPosition = Camera.main.ScreenToWorldPoint(screenPosition);

@@ -52,13 +52,13 @@ public class Skeleton : Enemy
         }
 
         spriteRenderer.color = originalColor; // Asegurarse de que el sprite tenga su color original
-        Destroy(gameObject, 0.5f); // Destruir después de 1 segundo (opcional)
+        Destroy(gameObject, 0.5f); 
     }
 
     private IEnumerator FlashRed()
     {
         spriteRenderer.color = Color.red; // Cambiar el color a rojo
-        yield return new WaitForSeconds(0.5f); // Esperar medio segundo
+        yield return new WaitForSeconds(0.5f); 
         spriteRenderer.color = originalColor; // Volver al color original
         flashCoroutine = null; // Limpiar la referencia cuando termina
     }
